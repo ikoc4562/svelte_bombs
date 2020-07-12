@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "bundle.css",
+  "sources": [
+    "../../App.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\n\timport {beforeUpdate, afterUpdate, onMount} from 'svelte'\n\tlet attempts=0;\n\tlet bombs=new Array(30);\n\tlet randomNum;\n\tlet interval;\n\n\tonMount(()=>{\n\t\tinterval=setInterval(()=>{\n\t\t\trandomNum=Math.floor(Math.random()*bombs.length)\n\t\t},1000)\n\t})\n\n\tafterUpdate(()=>{\n\t\tif (attempts==10){\n\t\t\tclearInterval(interval);\n\t\t\talert('You Lost');\n\t\t}\n\t\tif (bombs.length==0){\n\t\t\talert('You won');\n\t\t}\n\t})\n\n\tfunction handleClick(index) {\n\n\t\tif (index==randomNum){\n\t\t\tbombs=[...bombs.slice(0,index),...bombs.slice(index+1)];\n\t\t}\n\t\telse {\n\t\t\tattempts++;\n\t\t}\n\n\t}\n</script>\n\n<style>\n\t.bomb{\n\t\twidth: 40px;\n\t\tcursor: pointer;\n\t}\n\t.container{\n\t\twidth: 30%;\n\t\tdisplay: flex;\n\t\tflex-wrap: wrap;\n\t\tjustify-content: center;\n\t}\n\n</style>\n\n<h2>Bomb games</h2>\nAttempts : {attempts}\n\n<div class=\"container\">\n{#each bombs as _,i}\n<div on:click={()=>handleClick(i)}>\n\t<img src=\"bomb.png\" class=\"bomb\" style=\"opacity: {randomNum==i?'':'0.3'}\">\n\t</div>\n{/each}\n</div>\n\n\n"
+  ],
+  "names": [],
+  "mappings": "AAoCC,oBAAK,CAAC,AACL,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,OAAO,AAChB,CAAC,AACD,yBAAU,CAAC,AACV,KAAK,CAAE,GAAG,CACV,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,IAAI,CACf,eAAe,CAAE,MAAM,AACxB,CAAC"
+}
